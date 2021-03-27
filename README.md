@@ -128,8 +128,54 @@ Membuat script untuk menghasilkan file "hasil.txt"
  * Pada sub soal 2b - 2d, jika sudah ada file "hasil.txt" maka akan tidak akan ditimpa dan hasilnya akan ditambahkan di bagian akhir file tersebut.
 ## No 3
 ### Sub Soal 3a
+```shell
+#!/bin/bash
 
-
+for ((i=1; i<24; i=i+1))
+do
+    echo -e "i=$i\n"
+    wget -O "Kitten_$i.jpg" -o ->> Foto.log https://loremflickr.com/320/240/kitten
+done
+```
+Pada tahap pertama kode soal3a.sh ini akan didownload gambar random kucing sebnayak 23 gambar. Pada proses ini masih tidak diperdulikan apabila ada yang gambar yang sama.
+```shell
+files="$( find -type f )"
+    for file1 in $files; do
+        for file2 in $files; do
+            # echo "cek $file1 and $file2"
+            if [[ "$file1" != "$file2" && -e "$file1" && -e "$file2" ]]; then
+                if diff "$file1" "$file2" > /dev/null; then
+                    #echo "$file1 dan $file2 duplikat"
+                    rm -v "$file2"
+                    k=$[$k-1]
+                fi
+            fi
+        done
+    done
+```
+Selanjutnya, akan dicari satu persatu file yang identik atau sama. Metode pencarian file ini seperti bubble sort. Contoh file "Kitten_1" akan dicocokkan dengan dengan file gambar lainnya apakah sama atau tidak. Apabila sama maka salah satu dari file yang sudah ada akan dihapus. Penghapusan file terletak pada bagian 
+```shell
+  rm -v "$file2"
+```
+Sedangkan pembandingan 2 gambar apakah sama atau tidak menggunakan command "diff" pada bagian berikut :
+```shell
+if [[ "$file1" != "$file2" && -e "$file1" && -e "$file2" ]]; then
+     if diff "$file1" "$file2" > /dev/null; then
+```
+Kondisi if pertama berjalan apabila $file1 tidak sama degan $file2, file1 dan file2 harus ada.
+Setelah melewati tahap pembandingan antar gambar dan penghapusan gambar duplikat, maka nama file akan tidak teratur. Misal "Koleksi_05.jpg" telah dihapus karena sama dengan gambar lain, maka setelah file "Koleksi_04.jpg" akan langsung ke file "Koleksi_06.jpg". Agar penamaan file teratur maka dijalankan kode berikut :
+```shell
+j=1
+for file in *.jpg; do
+    if [[ $j -lt 10 ]]; then
+        mv "$file" "Koleksi_0$j.jpg"
+    else
+        mv "$file" "Koleksi_$j.jpg"
+    fi
+    j=$[$j+1]
+done
+```
+Nama file akan dirubah sehingga semua file akan menjadi urut. 
 
 ### Sub Soal 3b
 ```shell
