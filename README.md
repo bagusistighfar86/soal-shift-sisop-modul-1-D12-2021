@@ -127,6 +127,9 @@ Membuat script untuk menghasilkan file "hasil.txt"
  * Pada sub soal 2a, jika sudah ada file "hasil.txt" maka akan ditimpa
  * Pada sub soal 2b - 2d, jika sudah ada file "hasil.txt" maka akan tidak akan ditimpa dan hasilnya akan ditambahkan di bagian akhir file tersebut.
 ## No 3
+### Sub Soal 3a
+
+
 
 ### Sub Soal 3b
 ```shell
@@ -151,6 +154,90 @@ Untuk kode Crontab :
 Kode soal3b.sh ini akan dijalankan setiap jam 8 malam. Dari tanggal 1-31 setiap 7 hari sekali, dan dari tanggal 2-31 setiap 4 hari sekali. 
 
 ### Sub Soal 3c
+Di soal 3c ini ada 1 fungsi utama untuk mendownload gambar, cek apakah ada yang sama, rename file ulang, dan dipindahkan ke folder dengan nama "Kelinci_tanggalhariini" atau "Kucing_tanggalhariini". Fungsi di bawah ini merupakan gabungan dari kode soal3a.sh dan kode soal 3b.sh hanya beda dalam penamaan folder.
+```shell
+#!/bin/bash
+
+download_func(){
+    
+    for ((i=1; i<24; i=i+1))
+    do
+        echo -e "i=$i\n"
+        wget -O "$2_$i.jpg" -o ->> Foto.log $1
+    done
+
+    files="$( find -type f )"
+        for file1 in $files; do
+            for file2 in $files; do
+                # echo "checking $file1 and $file2"
+                if [[ "$file1" != "$file2" && -e "$file1" && -e "$file2" ]]; then
+                    if diff "$file1" "$file2" > /dev/null; then
+                        # echo "$file1 and $file2 are duplicates"
+                        rm -v "$file2"
+                    fi
+                fi
+            done
+        done
+
+    j=1
+    for file in *.jpg; do
+        if [[ $j -lt 10 ]]; then
+            mv "$file" "./Koleksi_0$j.jpg"
+        else
+            mv "$file" "./Koleksi_$j.jpg"
+        fi
+        j=$[$j+1]
+    done
+
+    #move hasil download kucing ke folder
+    tanggal=$(date +'%d-%m-%Y')
+    namafolder="$2_$tanggal"
+    mkdir "$namafolder"
+    mv ./Koleksi_* ./Foto.log "./$namafolder/" 
+
+    echo "File has been moved to $namafolder"
+        
+}
+```
+$1 pada kode di atas merupakan argumen URL yang dikirimkan ke fungsi tersebut. Sedangkan $2 adalah argumen "Kucing" atau "Kelinci" yang akan dikirimkan ke fungsi tersebut.
+
+Berikut adalah tahap pertama dalam kode ini :
+```shell
+n_kucing=$(ls | grep -e "Kucing.*" | wc -l)
+n_kelinci=$(ls | grep -e "Kelinci.*" | wc -l)
+```
+Pada kode di atas, akan dicari jumlah folder kucing dan kelinci yang ada. 'grep -e' ditujukan untuk mencari pencarian dengan menerapkan pattern agar matching atau sesuai. Pattern yang digunakan adalah kata "Kucing" dan "Kelinci". 'wc-l' ditujukan untuk menghitung jumlah folder yang ditemukan berdasarkan paterrnya.
+
+Lalu, masuk ke pemilihan kondisi saat akan mendownload gambar kucing atau kelinci :
+```shell
+#kondisi kucing
+if [ $n_kucing -eq $n_kelinci ] 
+then 
+    echo "download kucing"
+    url=https://loremflickr.com/320/240/kitten
+    download_func "$url" "Kucing"
+ 
+#kondisi  kelinci 
+else
+    echo "download kelinci"
+    url=https://loremflickr.com/320/240/bunny
+    download_func "$url" "Kelinci"  
+fi#kondisi kucing
+if [ $n_kucing -eq $n_kelinci ] 
+then 
+    echo "download kucing"
+    url=https://loremflickr.com/320/240/kitten
+    download_func "$url" "Kucing"
+ 
+#kondisi  kelinci 
+else
+    echo "download kelinci"
+    url=https://loremflickr.com/320/240/bunny
+    download_func "$url" "Kelinci"  
+fi
+```
+Di setiap kondisi akan menuju ke fungsi "download_func" dengan mengirimkan url dan "Kelinci/Kucing". Kondisi pertama berjalan apabila jumlah folder kucing($n_kucing) dan jumlah folder kelinci($n_kelinci) sama. Dalam artian, yang didownload kembali adalah gambar kucing. Kondisi kedua berjalan apabila jumlah folder kucing($n_kucing) tidak samaa dengan jumlah folder kelinci($n_kelinci). Dalam artian jumlah folder Kucing lebih banyak daripada jumlah folder Kelinci. Sehingga yang didownload adalah gambar kelinci.
+
 
 ### Sub Soal 3d
 ```shell
