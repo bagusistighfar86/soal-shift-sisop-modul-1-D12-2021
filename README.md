@@ -6,10 +6,10 @@
 |Rizqi Rifaldi|05111940000068|
 |Afdhal Ma'ruf Lukman|05111940007001|
 
-## No 1
-## No 2
+## Soal No 1
+## Soal No 2
 Untuk mengerjakan soal nomor 2, dibutuhkan data Toko Shisop berupa laporan dengan nama "Laporan-TokoShiSop.tsv"
-### 2a
+### Sub Soal 2a
 Pada soal 2a, Steven diminta untuk mencari Row ID dan *profit percentage* **terbesar** dari "Laporan-TokoShisop", dan jika lebih dari satu maka RowID yang diambil adalah RowID terbesar.
 ```shell
 awk -F"\t" '
@@ -37,7 +37,7 @@ Penjelasan :
 * pp dibandingkan dengan maxpp, dan jika nilai pp pada baris baru nilainya lebih besar dari maxpp yang disimpan, maka nilai maxpp akan diganti dengan nilai pp yang baru, dan RowId pada baris tersebut akan disimpan ke variabel id.
 * Pada End, mencetak kalimat dan nilai dari RowID dan maxpp.
 * awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt".
-### 2b
+### Sub Soal 2b
 Pada soal 2b, Clemong mencari nama customer pada transaksi tahun 2017 di Albuquerque.
 ```shell
 awk -F"\t" '
@@ -57,7 +57,7 @@ Penjelasan :
 * *Array* digunakan pada soal ini agar menghindari duplikasi.
 * Kemudian untuk mengakses *array* list, menggunakan *looping for* dan isinya untuk mencetak *index* dari *array* tersebut berupa nama customer dan hasilnya tanpa adanya duplikasi.
 * awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt" tanpa me-*replace* file hasil yang sudah ada.
-### 2c
+### Sub Soal 2c
 Pada soal c, Clemong mencari segment customer dan jumlah transaksinya yang paling sedikit.
 ```shell
 awk -F"\t" '
@@ -83,7 +83,7 @@ Penjelasan :
 * Untuk mengakses *array* menggunakan *looping for* dan perintahnya adalah untuk membandingkan nilai variabel min dan isi *array* tiap index (segmen), jika nilai variabel min lebih besar, maka nilainya akan diganti oleh isi dari array tersebut dan nama segmen nya (*index*) akan disimpan ke variabel segname. Dibandingkan terus menerus sampai *index array* terakhir.
 * Kemudian mencetak nilai dari segname yang berupa nama segmen dan min yang berupa jumlah transaksi terkecil.
 *  awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt" tanpa me-*replace* file hasil yang sudah ada.
-### 2d
+### Sub Soal 2d
 Pada soal d, Manis mencari wilayah bagian yang memiliki total keuntungan paling sedikit dan total keuntungan wilayah tersebut.
 ```shell
 awk -F"\t" '
@@ -113,7 +113,7 @@ Penjelasan :
 * Untuk mengakses *array* menggunakan *looping for* dan perintahnya adalah untuk membandingkan nilai variabel min dan isi *array* tiap index (region), jika nilai variabel min lebih besar, maka nilainya akan diganti oleh isi dari array tersebut dan nama region nya (*index*) akan disimpan ke variabel regname. Dibandingkan terus menerus sampai *index array* terakhir.
 * Kemudian mencetak nama region dan total keuntungan terkecil dari region tersebut.
 * awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt" tanpa me-*replace* file hasil yang sudah ada.
-### 2e
+### Sub Soal 2e
 Membuat script untuk menghasilkan file "hasil.txt" 
 ```shell
 #sub soal 2a
