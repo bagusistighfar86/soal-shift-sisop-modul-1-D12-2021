@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#proses download gambar dan dipindahkan ke folder 
+0 1 * * * bash soal3c.sh
+
+#proses membuat zip
+0 7 * * 1-5 bash "soal3d.sh"
+
+#proses unzip
+0 18 * * 1-5 unzip -P $(date +"%m%d%Y") Koleksi.zip
