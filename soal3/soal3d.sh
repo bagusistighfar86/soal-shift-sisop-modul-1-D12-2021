@@ -1,4 +1,4 @@
 #!/bin/bash
 
-namafolder=$(date +"%m%d%Y")
-zip -r -P"$namafolder" Koleksi.zip ./Kucing_* ./Kelinci_*
+Password=$(date +"%m%d%Y")
+zip -r -P "$Password" Koleksi.zip ./Kucing_* ./Kelinci_*
