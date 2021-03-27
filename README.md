@@ -128,3 +128,52 @@ Membuat script untuk menghasilkan file "hasil.txt"
  * Pada sub soal 2b - 2d, jika sudah ada file "hasil.txt" maka akan tidak akan ditimpa dan hasilnya akan ditambahkan di bagian akhir file tersebut.
 ## No 3
 
+### Sub Soal 3b
+```shell
+#!/bin/bash
+
+bash ./soal3a.sh 
+
+tanggal=$(date +'%d-%m-%Y')
+mkdir "$tanggal"
+mv ./Koleksi_* ./Foto.log "./$tanggal/" 
+
+echo "File has been moved to $tanggal"
+```
+Pertama, kode soal3a.sh akan di bash. Kemudian dibuatlah directori baru dengan nama tanggal hari ini. Kemudian akan di pindahkan (mv) semua file yang memiliki nama file "Koleksi_" Foto.log ke folder yang baru dibuat tersebut. Maka, file berhasil dipindahkan folder tersebut.
+
+Untuk kode Crontab :
+```shell
+#!/bin/bash
+
+0 20 1-31/7,2-31/4 * * cd /home/bagus/Documents/soal-shift-sisop-modul-1-D12-2021/soal3/ && bash "soal3b.sh"
+```
+Kode soal3b.sh ini akan dijalankan setiap jam 8 malam. Dari tanggal 1-31 setiap 7 hari sekali, dan dari tanggal 2-31 setiap 4 hari sekali. 
+
+### Sub Soal 3c
+
+### Sub Soal 3d
+```shell
+#!/bin/bash
+
+Password=$(date +"%m%d%Y")
+zip -r -P "$Password" Koleksi.zip ./Kucing_* ./Kelinci_*
+```
+Code di atas bertujuan untuk membuat zip dengan password tertentu. Password file zip tersebut menggunakan tanggal pada saat pembuatan zip itu juga. Setelah melakukan zip, file dan folder aslinya tidak akan hilang karena tidak menggunakan remove. Output berupa file "Koleksi.zip" dengan source seluruh folder Kucing dan Kelinci yang telah terbentuk.
+
+
+### Sub Soal 3e
+```shell
+#!/bin/bash
+
+#proses membuat zip
+0 7 * * 1-5 cd /home/bagus/Documents/soal-shift-sisop-modul-1-D12-2021/soal3/ && bash "soal3d.sh"
+```
+Code di atas akan membuat zip sesuai jadwal yang sudah ditetapkan melalui crontab, setiap hari kecuali sabtu dan minggu, dari jam 7 pagi sampai 6 sore, akan mengakses folder /home/bagus/soal-shift-sisop-modul-1-D12-2021/soal3/ dan kemudian akan di bash soal3d.sh
+```shell
+#proses unzip
+0 18 * * 1-5 cd /home/bagus/Documents/soal-shift-sisop-modul-1-D12-2021/soal3/ && unzip -P $(date +"%m%d%Y") && rm Koleksi.zip
+```
+Code di atas akan unzip sesuai jadwal yang sudah ditetapkan melalui crontab, setiap hari kecuali sabtu dan minggu, dari jam 7 pagi sampai 6 sore, akan mengakses folder /home/bagus/soal-shift-sisop-modul-1-D12-2021/soal3/ dan kemudian akan unzip Koleksi.zip dengan menggunakan password tanggal hari ini, lalu file zip yang awal akan dihapus. 
+
+
