@@ -127,3 +127,4 @@ Membuat script untuk menghasilkan file "hasil.txt"
  * Pada sub soal 2a, jika sudah ada file "hasil.txt" maka akan ditimpa
  * Pada sub soal 2b - 2d, jika sudah ada file "hasil.txt" maka akan tidak akan ditimpa dan hasilnya akan ditambahkan di bagian akhir file tersebut.
 ## No 3
+
