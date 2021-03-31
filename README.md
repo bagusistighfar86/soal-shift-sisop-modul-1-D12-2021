@@ -11,6 +11,7 @@
 Untuk mengerjakan soal nomor 2, dibutuhkan data Toko Shisop berupa laporan dengan nama "Laporan-TokoShiSop.tsv"
 ### Sub Soal 2a
 Pada soal 2a, Steven diminta untuk mencari Row ID dan *profit percentage* **terbesar** dari "Laporan-TokoShisop", dan jika lebih dari satu maka RowID yang diambil adalah RowID terbesar.
+Source Code :
 ```shell
 awk -F"\t" '
   BEGIN{
@@ -29,16 +30,42 @@ awk -F"\t" '
   }
 ' /home/rizqi/Downloads/Laporan-TokoShiSop.tsv > /home/rizqi/hasil.txt
 ```
-Penjelasan :
-* Karena menggunakan awk, maka pertama - tama perlu menulis "awk" dan dideklarasikan *Field Separatornya* yaitu tab.
-* Pada Begin didekalarisan variabel untuk menyimpan nilai PP terbesar yaitu maxpp dan awalnya nilainya adalah 0.
-* Dikarenakan baris pertama pada Laporan-TokoShiSop adalah nama kolom, maka agar baris pertama dilewati menggunakan percabangan jika NR(nomor baris) tidak sama dengan 1, baru dihitung nilai PP nya.
-* Setelah itu menghitung nilai PP dengan rumus yang sudah ditentukan, dengan $21 adalah *profit* dan $18 adalah *sales*, kemudian hasilnya disimpan di variabel pp.
-* pp dibandingkan dengan maxpp, dan jika nilai pp pada baris baru nilainya lebih besar dari maxpp yang disimpan, maka nilai maxpp akan diganti dengan nilai pp yang baru, dan RowId pada baris tersebut akan disimpan ke variabel id.
-* Pada End, mencetak kalimat dan nilai dari RowID dan maxpp.
-* awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt".
+Karena menggunakan awk, maka pertama - tama perlu menulis "awk" dan dideklarasikan *Field Separatornya* yaitu tab
+```shell
+awk -F"\t"
+```
+Pada bagian Begin, saya mendeklarasikan variabel untuk menyimpan nilai PP terbesar yaitu maxpp dan awalnya nilainya adalah 0.
+```shell
+BEGIN{
+    maxpp=0
+  }
+```
+Pada awalnya, saya tidak menggunakan percabangan 'jika Number of Row (NR) tidak sama dengan 1', tetapi terjadi error yaitu "Division by zero", ternyata hal ini dikarenakan baris pertama adalah string, jadi tidak bisa dimasukkan ke dalam rumus mencari persentase profit. Maka dari itu, untuk menghindari error, saya menggunakan percabangan :
+```shell
+if(NR!=1)
+```
+Setelah itu, menghitung nilai PP dengan rumus yang sudah ditentukan, dengan $21 adalah *profit* dan $18 adalah *sales*, kemudian hasilnya disimpan di variabel pp
+```shell
+pp=$21/($18-$21)*100
+```
+Setelah menghitung nilai pp, pp kemudian dibandingkan dengan maxpp, dan jika nilai pp pada baris baru nilainya lebih besar dari maxpp yang disimpan, maka nilai maxpp akan diganti dengan nilai pp yang baru, dan RowId pada baris tersebut akan disimpan ke variabel id.
+```shell
+if(pp>=maxpp){
+        maxpp=pp;id=$1
+```
+Pada bagian End, saya mencetak kalimat "Transaksi terakhir dengan profit percentage terbesar yaitu" dan nilai dari RowID dan maxpp.
+```shell
+END{
+    printf("Transaksi terakhir dengan profit percentage terbesar yaitu %d dengan persentase %.2f%\n\n",id,maxpp)
+  }
+```
+awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt".
+```shell
+/home/rizqi/Downloads/Laporan-TokoShiSop.tsv > /home/rizqi/hasil.txt
+```
 ### Sub Soal 2b
 Pada soal 2b, Clemong mencari nama customer pada transaksi tahun 2017 di Albuquerque.
+Source Code :
 ```shell
 awk -F"\t" '
   $2~/2017/ && $10~/Albuquerque/ {list[$7]++}
@@ -51,14 +78,31 @@ awk -F"\t" '
   }
 ' /home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt
 ```
-Penjelasan :
-* Karena menggunakan awk, maka pertama - tama perlu menulis "awk" dan dideklarasikan *Field Separatornya* yaitu tab.
-* Pertama-tama, mencari baris yang mengandung kata 2017 pada kolom 2 ($2) yaitu *Order ID* dan mencari kata Albuquerque pada kolom 10 ($10) yaitu *City*, kemudian jika sudah ketemu, maka kolom 7 ($7) yaitu nama customer dijadikan *index* dari *array*: list dan di *increment*.
-* *Array* digunakan pada soal ini agar menghindari duplikasi.
-* Kemudian untuk mengakses *array* list, menggunakan *looping for* dan isinya untuk mencetak *index* dari *array* tersebut berupa nama customer dan hasilnya tanpa adanya duplikasi.
-* awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt" tanpa me-*replace* file hasil yang sudah ada.
+Karena menggunakan awk, maka pertama - tama perlu menulis "awk" dan dideklarasikan *Field Separatornya* yaitu tab.
+```shell
+awk -F"\t"
+```
+Pertama-tama, mencari baris yang mengandung kata 2017 pada kolom 2 ($2) yaitu *Order ID* dan mencari kata Albuquerque pada kolom 10 ($10) yaitu *City*, kemudian jika sudah ketemu, maka kolom 7 ($7) yaitu nama customer dijadikan *index* dari *array*: list dan di *increment*. Awalnya saya tidak menggunakan array, tetapi ternyata setelah di *print* terjadi duplikasi pada nama customer, maka saya gunakan array untuk menghindari duplikasi.
+```shell
+$2~/2017/ && $10~/Albuquerque/ {list[$7]++}
+```
+Kemudian pada bagian END, untuk mengakses *array* list, menggunakan *looping for* dan isinya untuk mencetak *index* dari *array* tersebut berupa nama customer dan hasilnya tanpa adanya duplikasi.
+```shell
+  END{
+    printf("Daftar nama customer di Albuquerque pada tahun 2017 antara lain:\n")
+    for(nama in list){
+      printf("%s\n",nama)
+    }
+    printf("\n")
+  }
+```
+awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt" tanpa me-*replace* file hasil yang sudah ada.
+```shell
+/home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt
+```
 ### Sub Soal 2c
 Pada soal c, Clemong mencari segment customer dan jumlah transaksinya yang paling sedikit.
+Source Code :
 ```shell
 awk -F"\t" '
   $8~/Corporate/ || $8~/Home Office/ || $8~/Consumer/ {seglist[$8]++}
@@ -75,16 +119,38 @@ awk -F"\t" '
   }
 ' /home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt
 ```
-Penjelasan :
-* Karena menggunakan awk, maka pertama - tama perlu menulis "awk" dan dideklarasikan *Field Separatornya* yaitu tab.
-* Pertama-tama, mencari baris yang mengandung kata Corporate atau Home Office atau Consumer pada kolom 8 ($8) yaitu *Segment* dan jika ketemu salah satu, maka kolom tersebut akan dijadikan *index* dari *array* seglist dan akan diincrement jika menemukan kata yang sama tiap *index*.
-* Pada END, dideklarasikan variabel min untuk menyimpan nilai minimum dari transaksi, dan nilai awalnya adalah 999999 agar jika dibandingkan dengan jumlah transaksi segmen akan langsung terganti.
-* Dideklarasikan juga variabel segname untuk menyimpan jenis segmen yang mempunyai jumlah transaksi terkecil.
-* Untuk mengakses *array* menggunakan *looping for* dan perintahnya adalah untuk membandingkan nilai variabel min dan isi *array* tiap index (segmen), jika nilai variabel min lebih besar, maka nilainya akan diganti oleh isi dari array tersebut dan nama segmen nya (*index*) akan disimpan ke variabel segname. Dibandingkan terus menerus sampai *index array* terakhir.
-* Kemudian mencetak nilai dari segname yang berupa nama segmen dan min yang berupa jumlah transaksi terkecil.
-*  awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt" tanpa me-*replace* file hasil yang sudah ada.
+Karena menggunakan awk, maka pertama - tama perlu menulis "awk" dan dideklarasikan *Field Separatornya* yaitu tab.
+```shell
+awk -F"\t"
+```
+Pertama-tama, mencari baris yang mengandung kata Corporate atau Home Office atau Consumer pada kolom 8 ($8) yaitu *Segment* dan jika ketemu salah satu, maka kolom tersebut akan dijadikan *index* dari *array* seglist dan akan diincrement isinya jika menemukan kata yang sama tiap *index*.
+```shell
+$8~/Corporate/ || $8~/Home Office/ || $8~/Consumer/ {seglist[$8]++}
+```
+Pada bagian END, dideklarasikan variabel min untuk menyimpan nilai minimum dari transaksi, dan nilai awalnya adalah 999999 agar jika dibandingkan dengan jumlah transaksi segmen akan langsung terganti. Dideklarasikan juga variabel segname untuk menyimpan jenis segmen yang mempunyai jumlah transaksi terkecil.
+```shell
+min=999999;
+    segname;
+```
+Untuk mengakses *array* menggunakan *looping for* dan perintahnya adalah untuk membandingkan nilai variabel min dan isi *array* tiap index (segmen), jika nilai variabel min lebih besar, maka nilainya akan diganti oleh isi dari array tersebut dan nama segmen nya (*index*) akan disimpan ke variabel segname. Dibandingkan terus menerus sampai *index array* terakhir.
+```shell
+for(var in seglist){
+      if(min > SEGLIST[var]){
+        segname=var;
+        min=seglist[var];
+      }
+```
+Kemudian mencetak nilai dari segname yang berupa nama segmen dan min yang berupa jumlah transaksi terkecil.
+```shell
+printf("Tipe segmen customer yang penjualannya paling sedikit adalah %s dengan %d Transaksi\n\n",segname,min)
+```
+awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt" tanpa me-*replace* file hasil yang sudah ada.
+```shell
+/home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt
+```
 ### Sub Soal 2d
 Pada soal d, Manis mencari wilayah bagian yang memiliki total keuntungan paling sedikit dan total keuntungan wilayah tersebut.
+Source Code :
 ```shell
 awk -F"\t" '
   {
@@ -105,14 +171,38 @@ awk -F"\t" '
   }
 ' /home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt   
 ```
-Penjelasan :
-* Karena menggunakan awk, maka pertama - tama perlu menulis "awk" dan dideklarasikan *Field Separatornya* yaitu tab.
-* Kemudian membuat *array* dengan *index* region untuk menampung jumlah keuntungan (*profit*) tiap region, jika bertemu index yang sama, maka isi array akan ditambahkan oleh kolom 21 ($21) yaitu kolom profit.
-* Pada END, dideklarasikan variabel min untuk menyimpan nilai minimum dari keuntungan, dan nilai awalnya adalah 999999 agar jika dibandingkan dengan jumlah keuntungan region akan langsung terganti.
-* Dideklarasikan juga variabel regname untuk menyimpan region yang mempunyai jumlah keuntungan terkecil.
-* Untuk mengakses *array* menggunakan *looping for* dan perintahnya adalah untuk membandingkan nilai variabel min dan isi *array* tiap index (region), jika nilai variabel min lebih besar, maka nilainya akan diganti oleh isi dari array tersebut dan nama region nya (*index*) akan disimpan ke variabel regname. Dibandingkan terus menerus sampai *index array* terakhir.
-* Kemudian mencetak nama region dan total keuntungan terkecil dari region tersebut.
-* awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt" tanpa me-*replace* file hasil yang sudah ada.
+Karena menggunakan awk, maka pertama - tama perlu menulis "awk" dan dideklarasikan *Field Separatornya* yaitu tab.
+```shell
+awk -F"\t"
+```
+Kemudian membuat *array* dengan *index* region untuk menampung jumlah keuntungan (*profit*) tiap region, jika bertemu index yang sama, maka isi array akan ditambahkan oleh kolom 21 ($21) yaitu kolom profit. Saya menggunakan percabangan untuk NR > 1 untuk melewati baris pertama yang berupa judul kolom (string)
+```shell
+if(NR>1){
+      profitreg[$13]+=$21
+    }
+```
+Pada bagian END, dideklarasikan variabel min untuk menyimpan nilai minimum dari keuntungan, dan nilai awalnya adalah 999999 agar jika dibandingkan dengan jumlah keuntungan region akan langsung terganti. Dideklarasikan juga variabel regname untuk menyimpan region yang mempunyai jumlah keuntungan terkecil.
+```shell
+min=999999;
+    regname;
+```
+Untuk mengakses *array*, menggunakan *looping for* dan perintahnya adalah untuk membandingkan nilai variabel min dan isi *array* tiap index (region), jika nilai variabel min lebih besar, maka nilainya akan diganti oleh isi dari array tersebut dan nama region nya (*index*) akan disimpan ke variabel regname. Dibandingkan terus menerus sampai *index array* terakhir.
+```shell
+for(var in profitreg){
+      if(min > profitreg[var]){
+        min=profitreg[var];
+        regname=var;
+      }
+    }
+```
+Kemudian mencetak nama region dan total keuntungan terkecil dari region tersebut.
+```shell
+   printf("Wilayah bagian (region) yang memiliki total keuntungan (profit) yang paling sedikit adalah %s dengan total keuntungan %d\n",regname,min)
+```
+awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt" tanpa me-*replace* file hasil yang sudah ada.
+```shell
+/home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt
+```
 ### Sub Soal 2e
 Membuat script untuk menghasilkan file "hasil.txt" 
 ```shell
@@ -122,10 +212,11 @@ Membuat script untuk menghasilkan file "hasil.txt"
 #sub soal 2b - 2d
 /home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt
  ```
- Penjelasan :
- * Sudah ada pada sub soal 2a - 2d, dimana hasilnya akan dimasukkan ke dalam file "hasil.txt"
- * Pada sub soal 2a, jika sudah ada file "hasil.txt" maka akan ditimpa
- * Pada sub soal 2b - 2d, jika sudah ada file "hasil.txt" maka akan tidak akan ditimpa dan hasilnya akan ditambahkan di bagian akhir file tersebut.
+Sudah ada pada sub soal 2a - 2d, dimana hasilnya akan dimasukkan ke dalam file "hasil.txt". Pada sub soal 2a, jika sudah ada file "hasil.txt" maka akan ditimpa dan
+pada sub soal 2b - 2d, jika sudah ada file "hasil.txt" maka akan tidak akan ditimpa dan hasilnya akan ditambahkan di bagian akhir file tersebut.
+
+Output dari script tersebut dari soal 2a sampai 2d ada pada file hasil.txt, yang isinya adalah sebagai berikut :
+[![1617163189455-2.jpg](https://i.postimg.cc/wTLG0fg4/1617163189455-2.jpg)](https://postimg.cc/svfm2JB5)
 ## No 3
 ### Sub Soal 3a
 ```shell
