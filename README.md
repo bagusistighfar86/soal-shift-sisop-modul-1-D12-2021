@@ -8,6 +8,8 @@
 
 ## Soal No 1
 ### Sub Soal 1a
+Ryujin diminta untuk mengumpulkan informasi daari log aplikasi pada file syslog.log yang berupa jenis log (INFO atau ERROR), pesan log, dan username pada setiap baris lognya dengan menggunakan regex untuk mempermudah pekerjaannya.
+Source Code :
 ```shell
 #all INFO or ERROR. Ex : INFO Commented on ticket [#2389] (sri)
 regex="(INFO|ERROR)(.*)"
@@ -20,20 +22,23 @@ regex3="(?=[(])(.*)(?<=[)])"
 input="/home/bagus/Downloads/syslog.log";
 grep -oP "$regex" "$input"
 ```
-Pada soal ini terdapat inisialisasi beberapa regular expression atau biasa dikenal dengan "regex". Regex digunakan untuk mengelompokkan suatu kesatuan text menjadi beberapa kolom tabel dengan metode pencarian "grep".
-Regex utama digunakan untuk mengelompokkan semua INFO atau ERROR. 
-regex1 digunakan untuk mengelompokkan semua log message ERROR. 
-regex2 digunakan untuk mengelompokkan semua username. 
-regex3 digunakan untuk mengelompokkan semua username dengan (username).
-Semua ini mengacu pada input file yakni "syslog.log".
+Pada soal ini terdapat inisialisasi beberapa regular expression atau biasa dikenal dengan ```regex```. Regex digunakan untuk mengelompokkan suatu kesatuan text menjadi beberapa kolom tabel dengan metode pencarian ```grep```.
+* ```Regex utama``` digunakan untuk mengelompokkan semua INFO atau ERROR.
+* ```regex1``` digunakan untuk mengelompokkan semua log message ERROR.
+* ```regex2``` digunakan untuk mengelompokkan semua username.
+* ```regex3``` digunakan untuk mengelompokkan semua username dengan (username).
+Semua ini mengacu pada input file yakni ```syslog.log```.
+
 Kemudian, hasil pencarian berdasarkan pengelompokan ini ditampilkan di output terminal. 
 
 ### Sub Soal 1b
+Ryujin harus menampilkan semua pesan error yang muncul beserta jumlah kemunculannya.
+Souce Code :
 ```shell
 grep -oP "$regex1" "$input"| sort | uniq -c | sort -n
 ```
-grep ini untuk menampilkan pengelompokan pada input file berdasarkan regex 1. Hasil pengelompokan ini diurutkan berdasaran waktu log. 
-Setelah itu akan terdapat beberapa message log yang sama sehingga disatukan melalui "uniq -c". Melalui uniq ini akan dihitung jumlah message log yang sama. Lalu, akan di sort kembali dari jumlah message log terbanyak yang sama. 
+grep ini digunakan untuk menampilkan pengelompokan pada input file berdasarkan regex 1. Hasil pengelompokan ini diurutkan berdasarkan waktu log. 
+Setelah itu akan terdapat beberapa message log yang sama sehingga disatukan melalui ```uniq -c```. Melalui uniq ini akan dihitung jumlah message log yang sama. Lalu, akan di sort kembali dari jumlah message log terbanyak yang sama. 
 
 ```shell
 n_error=$(grep -c 'ERROR' $input)
@@ -42,6 +47,8 @@ echo "ERROR_MESSAGE = $n_error"
 n_error untuk mendaptkan jumlah total message log ERROR. 
 
 ### Sub Soal 1c
+Ryujin harus menampilkan jumlah kemunculan log ERROR dan INFO untuk setiap user-nya.
+Source Code :
 ```shell
 echo ERROR
 grep -oP "$regex2" <<< "$(grep -oP "ERROR.*" "$input")" | sort -n | uniq -c
@@ -51,6 +58,8 @@ grep -oP "$regex2" <<< "$(grep -oP "INFO.*" "$input")" | sort -n | uniq -c
 Kedua grep ini untuk menampilkan username dan message log berupa ERROR dan INFO. Kemudian ditampilkan jumlah ERROR atau INFO per username dan diurutkan dari alfabet terkecil username. 
 
 ### Sub Soal 1d
+Semua informasi yang didapatkan pada sub soal 1b dituliskan ke dalam file ```error_message.csv``` dengan header __Error,Count__ yang diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak.
+Source Code :
 ```shell
 printf "ERROR,COUNT\n" > "error_message.csv" 
 regex4="^ *[0-9]+ \K.*"
@@ -65,6 +74,8 @@ regex4 ini untuk menghilangkan jumlah per message log yang akan dimasukkan ke ko
 per message log. 
 
 ### Sub Soal 1e
+Semua informasi yang didapatkan pada poin c ditulis ke dalam file ```user_statistic.csv``` dengan  header __Username,INFO,ERROR__ dan diurutkan berdasarkan username secara ascending.
+Source Code :
 ```shell
 printf "Username,INFO,ERROR\n" > "user_statistic.csv"
 grep -oP "$regex3" <<< "$(grep -oP "ERROR.*" "$input")" | sort | uniq | 
@@ -75,13 +86,13 @@ while read -r er; do
     printf "%s,%d,%d\n" "$username" "$n_per_info" "$n_per_error" >> "user_statistic.csv"
 done
 ```
-Sub soal ini membuat file user_statistic.csv dengan isi kolom username, INFO yang merupakan jumlah INFO per username, dan ERROR yang merupakan jumlah
+Sub soal ini membuat file ```user_statistic.csv``` dengan isi kolom username, INFO yang merupakan jumlah INFO per username, dan ERROR yang merupakan jumlah
 ERROR per user. 
 
 # Soal No 2
-Untuk mengerjakan soal nomor 2, dibutuhkan data Toko Shisop berupa laporan dengan nama "Laporan-TokoShiSop.tsv"
+Untuk mengerjakan soal nomor 2, dibutuhkan data Toko Shisop berupa laporan dengan nama ```Laporan-TokoShiSop.tsv```
 ### Sub Soal 2a
-Pada soal 2a, Steven diminta untuk mencari Row ID dan *profit percentage* **terbesar** dari "Laporan-TokoShisop", dan jika lebih dari satu maka RowID yang diambil adalah RowID terbesar.
+Pada soal 2a, Steven diminta untuk mencari Row ID dan *profit percentage* **terbesar** dari ```Laporan-TokoShisop.tsv```, dan jika lebih dari satu maka RowID yang diambil adalah RowID terbesar.
 Source Code :
 ```shell
 awk -F"\t" '
@@ -101,7 +112,7 @@ awk -F"\t" '
   }
 ' /home/rizqi/Downloads/Laporan-TokoShiSop.tsv > /home/rizqi/hasil.txt
 ```
-Karena menggunakan awk, maka pertama - tama perlu menulis "awk" dan dideklarasikan *Field Separatornya* yaitu tab
+Karena menggunakan awk, maka pertama - tama perlu menulis ```awk``` dan dideklarasikan *Field Separatornya* yaitu tab
 ```shell
 awk -F"\t"
 ```
@@ -130,7 +141,7 @@ END{
     printf("Transaksi terakhir dengan profit percentage terbesar yaitu %d dengan persentase %.2f%\n\n",id,maxpp)
   }
 ```
-awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt".
+awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di ```/home/rizqi/Downloads/Laporan-TokoShiSop.tsv``` dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori ```/home/rizqi/hasil.txt```.
 ```shell
 /home/rizqi/Downloads/Laporan-TokoShiSop.tsv > /home/rizqi/hasil.txt
 ```
@@ -149,7 +160,7 @@ awk -F"\t" '
   }
 ' /home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt
 ```
-Karena menggunakan awk, maka pertama - tama perlu menulis "awk" dan dideklarasikan *Field Separatornya* yaitu tab.
+Karena menggunakan awk, maka pertama - tama perlu menulis ```awk``` dan dideklarasikan *Field Separatornya* yaitu tab.
 ```shell
 awk -F"\t"
 ```
@@ -167,7 +178,7 @@ Kemudian pada bagian END, untuk mengakses *array* list, menggunakan *looping for
     printf("\n")
   }
 ```
-awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt" tanpa me-*replace* file hasil yang sudah ada.
+awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di ```/home/rizqi/Downloads/Laporan-TokoShiSop.tsv``` dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori ```/home/rizqi/hasil.txt``` tanpa me-*replace* file hasil yang sudah ada.
 ```shell
 /home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt
 ```
@@ -190,7 +201,7 @@ awk -F"\t" '
   }
 ' /home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt
 ```
-Karena menggunakan awk, maka pertama - tama perlu menulis "awk" dan dideklarasikan *Field Separatornya* yaitu tab.
+Karena menggunakan awk, maka pertama - tama perlu menulis ```awk``` dan dideklarasikan *Field Separatornya* yaitu tab.
 ```shell
 awk -F"\t"
 ```
@@ -215,7 +226,7 @@ Kemudian mencetak nilai dari segname yang berupa nama segmen dan min yang berupa
 ```shell
 printf("Tipe segmen customer yang penjualannya paling sedikit adalah %s dengan %d Transaksi\n\n",segname,min)
 ```
-awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt" tanpa me-*replace* file hasil yang sudah ada.
+awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di ```/home/rizqi/Downloads/Laporan-TokoShiSop.tsv``` dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori ```/home/rizqi/hasil.txt``` tanpa me-*replace* file hasil yang sudah ada.
 ```shell
 /home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt
 ```
@@ -242,11 +253,11 @@ awk -F"\t" '
   }
 ' /home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt   
 ```
-Karena menggunakan awk, maka pertama - tama perlu menulis "awk" dan dideklarasikan *Field Separatornya* yaitu tab.
+Karena menggunakan awk, maka pertama - tama perlu menulis ```awk``` dan dideklarasikan *Field Separatornya* yaitu tab.
 ```shell
 awk -F"\t"
 ```
-Kemudian membuat *array* dengan *index* region untuk menampung jumlah keuntungan (*profit*) tiap region, jika bertemu index yang sama, maka isi array akan ditambahkan oleh kolom 21 ($21) yaitu kolom profit. Saya menggunakan percabangan untuk NR > 1 untuk melewati baris pertama yang berupa judul kolom (string)
+Kemudian membuat *array* dengan *index* region untuk menampung jumlah keuntungan (*profit*) tiap region, jika bertemu index yang sama, maka isi array akan ditambahkan oleh kolom 21 ($21) yaitu kolom profit. Saya menggunakan percabangan untuk ```NR > 1``` untuk melewati baris pertama yang berupa judul kolom (string)
 ```shell
 if(NR>1){
       profitreg[$13]+=$21
@@ -270,12 +281,12 @@ Kemudian mencetak nama region dan total keuntungan terkecil dari region tersebut
 ```shell
    printf("Wilayah bagian (region) yang memiliki total keuntungan (profit) yang paling sedikit adalah %s dengan total keuntungan %d\n",regname,min)
 ```
-awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di "/home/rizqi/Downloads/Laporan-TokoShiSop.tsv" dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori "/home/rizqi/hasil.txt" tanpa me-*replace* file hasil yang sudah ada.
+awk ini menggunakan file Laporan-ShiSop.tsv yang saya letakkan di ```/home/rizqi/Downloads/Laporan-TokoShiSop.tsv``` dan hasilnya akan dimasukkan ke dalam file hasil.txt yang saya buat pada direktori ```/home/rizqi/hasil.txt``` tanpa me-*replace* file hasil yang sudah ada.
 ```shell
 /home/rizqi/Laporan-TokoShiSop.tsv >> /home/rizqi/hasil.txt
 ```
 ### Sub Soal 2e
-Membuat script untuk menghasilkan file "hasil.txt" 
+Membuat script untuk menghasilkan file ```hasil.txt```
 ```shell
 #sub soal 2a
 /home/rizqi/Laporan-TokoShiSop.tsv > /home/rizqi/hasil.txt
@@ -290,6 +301,7 @@ Output dari script tersebut dari soal 2a sampai 2d ada pada file hasil.txt, yang
 [![1617163189455-2.jpg](https://i.postimg.cc/wTLG0fg4/1617163189455-2.jpg)](https://postimg.cc/svfm2JB5)
 ## No 3
 ### Sub Soal 3a
+Membuat script untuk mengunduh 23 gambar dari ```https://loremflickr.com/320/240/kittenl``` serta menyimpan log-nya ke file ```Foto.log```, kemudian menghapus gambar yang sama dan menyimpan gambar-gambar tersebut dengan nama ```Koleksi_XX``` dengan nomor yang berurutan tanpa ada yang hilang.
 ```shell
 #!/bin/bash
 
@@ -299,7 +311,7 @@ do
     wget -O "Kitten_$i.jpg" -o ->> Foto.log https://loremflickr.com/320/240/kitten
 done
 ```
-Pada tahap pertama kode soal3a.sh ini akan didownload gambar random kucing sebnayak 23 gambar. Pada proses ini masih tidak diperdulikan apabila ada yang gambar yang sama.
+Pada tahap pertama kode soal3a.sh ini akan didownload gambar random kucing sebanyak 23 gambar. Pada proses ini apabila ada gambar yang sama akan diabaikan.
 ```shell
 files="$( find -type f )"
     for file1 in $files; do
@@ -319,13 +331,13 @@ Selanjutnya, akan dicari satu persatu file yang identik atau sama. Metode pencar
 ```shell
   rm -v "$file2"
 ```
-Sedangkan pembandingan 2 gambar apakah sama atau tidak menggunakan command "diff" pada bagian berikut :
+Sedangkan pembandingan 2 gambar apakah sama atau tidak menggunakan command ```diff``` pada bagian berikut :
 ```shell
 if [[ "$file1" != "$file2" && -e "$file1" && -e "$file2" ]]; then
      if diff "$file1" "$file2" > /dev/null; then
 ```
-Kondisi if pertama berjalan apabila $file1 tidak sama degan $file2, file1 dan file2 harus ada.
-Setelah melewati tahap pembandingan antar gambar dan penghapusan gambar duplikat, maka nama file akan tidak teratur. Misal "Koleksi_05.jpg" telah dihapus karena sama dengan gambar lain, maka setelah file "Koleksi_04.jpg" akan langsung ke file "Koleksi_06.jpg". Agar penamaan file teratur maka dijalankan kode berikut :
+Kondisi if pertama berjalan apabila ```$file1``` tidak sama degan ```$file2```, file1 dan file2 harus ada.
+Setelah melewati tahap pembandingan antar gambar dan penghapusan gambar duplikat, maka nama file akan tidak teratur. Misal ```Koleksi_05.jpg``` telah dihapus karena sama dengan gambar lain, maka setelah file ```Koleksi_04.jpg``` akan langsung ke file ```Koleksi_06.jpg```. Agar penamaan file teratur maka dijalankan kode berikut :
 ```shell
 j=1
 for file in *.jpg; do
@@ -340,6 +352,7 @@ done
 Nama file akan dirubah sehingga semua file akan menjadi urut. 
 
 ### Sub Soal 3b
+Menjalankan script sehari sekali pada jam 8 malam untuk tanggal - tanggal tertentu setiap bulan, yaitu tanggal 1 tujuh hari sekali dan dari tanggal 2 empat hari sekali. Gambar yang diunduh serta log-nya akan dipindahkan ke folder dengan nama tanggall unduhannya dengan format ```DD-MM-YYYY```. Source Code :
 ```shell
 #!/bin/bash
 
@@ -362,7 +375,9 @@ Untuk kode Crontab :
 Kode soal3b.sh ini akan dijalankan setiap jam 8 malam. Dari tanggal 1-31 setiap 7 hari sekali, dan dari tanggal 2-31 setiap 4 hari sekali. 
 
 ### Sub Soal 3c
-Di soal 3c ini ada 1 fungsi utama untuk mendownload gambar, cek apakah ada yang sama, rename file ulang, dan dipindahkan ke folder dengan nama "Kelinci_tanggalhariini" atau "Kucing_tanggalhariini". Fungsi di bawah ini merupakan gabungan dari kode soal3a.sh dan kode soal 3b.sh hanya beda dalam penamaan folder.
+Mengunduh gambar kelinci dari ```https://loremflickr.com/320/240/kitten``` dan mengunduh gambar kelinci dan kucing secara bergantian dan memindahkan foto dan log-nya ke folder dengan awalan ```Kucing_``` untuk kucing dan ```Kelinci_```untuk kelinci.
+
+Di soal 3c ini ada 1 fungsi utama untuk mendownload gambar, cek apakah ada yang sama, rename file ulang, dan dipindahkan ke folder dengan nama ```Kelinci_tanggalhariini``` atau ```Kucing_tanggalhariini```. Fungsi di bawah ini merupakan gabungan dari kode soal3a.sh dan kode soal 3b.sh hanya beda dalam penamaan folder.
 ```shell
 #!/bin/bash
 
@@ -407,14 +422,14 @@ download_func(){
         
 }
 ```
-$1 pada kode di atas merupakan argumen URL yang dikirimkan ke fungsi tersebut. Sedangkan $2 adalah argumen "Kucing" atau "Kelinci" yang akan dikirimkan ke fungsi tersebut.
+```$1``` pada kode di atas merupakan argumen URL yang dikirimkan ke fungsi tersebut. Sedangkan ```$2``` adalah argumen "Kucing" atau "Kelinci" yang akan dikirimkan ke fungsi tersebut.
 
 Berikut adalah tahap pertama dalam kode ini :
 ```shell
 n_kucing=$(ls | grep -e "Kucing.*" | wc -l)
 n_kelinci=$(ls | grep -e "Kelinci.*" | wc -l)
 ```
-Pada kode di atas, akan dicari jumlah folder kucing dan kelinci yang ada. 'grep -e' ditujukan untuk mencari pencarian dengan menerapkan pattern agar matching atau sesuai. Pattern yang digunakan adalah kata "Kucing" dan "Kelinci". 'wc-l' ditujukan untuk menghitung jumlah folder yang ditemukan berdasarkan paterrnya.
+Pada kode di atas, akan dicari jumlah folder kucing dan kelinci yang ada. ```grep -e``` ditujukan untuk mencari pencarian dengan menerapkan pattern agar matching atau sesuai. Pattern yang digunakan adalah kata "Kucing" dan "Kelinci". ```wc-l``` ditujukan untuk menghitung jumlah folder yang ditemukan berdasarkan paterrnya.
 
 Lalu, masuk ke pemilihan kondisi saat akan mendownload gambar kucing atau kelinci :
 ```shell
@@ -444,31 +459,33 @@ else
     download_func "$url" "Kelinci"  
 fi
 ```
-Di setiap kondisi akan menuju ke fungsi "download_func" dengan mengirimkan url dan "Kelinci/Kucing". Kondisi pertama berjalan apabila jumlah folder kucing($n_kucing) dan jumlah folder kelinci($n_kelinci) sama. Dalam artian, yang didownload kembali adalah gambar kucing. Kondisi kedua berjalan apabila jumlah folder kucing($n_kucing) tidak samaa dengan jumlah folder kelinci($n_kelinci). Dalam artian jumlah folder Kucing lebih banyak daripada jumlah folder Kelinci. Sehingga yang didownload adalah gambar kelinci.
+Di setiap kondisi akan menuju ke fungsi ```download_func``` dengan mengirimkan url dan "Kelinci/Kucing". Kondisi pertama berjalan apabila jumlah folder ```kucing($n_kucing)``` dan jumlah folder ```kelinci($n_kelinci)``` sama. Dalam artian, yang didownload kembali adalah gambar kucing. Kondisi kedua berjalan apabila jumlah folder ```kucing($n_kucing)``` tidak sama dengan jumlah folder ```kelinci($n_kelinci)```. Dalam artian jumlah folder Kucing lebih banyak daripada jumlah folder Kelinci. Sehingga yang didownload adalah gambar kelinci.
 
 
 ### Sub Soal 3d
+Membuat script untuk memindahkan seluruh folder ke zip yang diberi nama ```Koleksi.zip``` dan mengunci zip tersebut dengan password berupa tanggal saat ini dengan format ```MMDDYYYY```. Source Code :
 ```shell
 #!/bin/bash
 
 Password=$(date +"%m%d%Y")
 zip -r -P "$Password" Koleksi.zip ./Kucing_* ./Kelinci_*
 ```
-Code di atas bertujuan untuk membuat zip dengan password tertentu. Password file zip tersebut menggunakan tanggal pada saat pembuatan zip itu juga. Setelah melakukan zip, file dan folder aslinya tidak akan hilang karena tidak menggunakan remove. Output berupa file "Koleksi.zip" dengan source seluruh folder Kucing dan Kelinci yang telah terbentuk.
+Code di atas bertujuan untuk membuat zip dengan password tertentu. Password file zip tersebut menggunakan tanggal pada saat pembuatan zip itu juga. Setelah melakukan zip, file dan folder aslinya tidak akan hilang karena tidak menggunakan remove. Output berupa file ```Koleksi.zip``` dengan source seluruh folder Kucing dan Kelinci yang telah terbentuk.
 
 
 ### Sub Soal 3e
+Membuat koleksinya hanya ter-zip saat waktu kuliah yaitu dari Senin - Jumat pada jam 07.00 - 18.00 dan selain waktu tersebut koleksinya ter-unzip dan file zip akan dihapus (tidak ada sama sekali). Source Code :
 ```shell
 #!/bin/bash
 
 #proses membuat zip
 0 7 * * 1-5 cd /home/bagus/Documents/soal-shift-sisop-modul-1-D12-2021/soal3/ && bash "soal3d.sh"
 ```
-Code di atas akan membuat zip sesuai jadwal yang sudah ditetapkan melalui crontab, setiap hari kecuali sabtu dan minggu, dari jam 7 pagi sampai 6 sore, akan mengakses folder /home/bagus/soal-shift-sisop-modul-1-D12-2021/soal3/ dan kemudian akan di bash soal3d.sh
+Code di atas akan membuat zip sesuai jadwal yang sudah ditetapkan melalui crontab, setiap hari kecuali sabtu dan minggu, dari jam 7 pagi sampai 6 sore, akan mengakses folder ```/home/bagus/soal-shift-sisop-modul-1-D12-2021/soal3/``` dan kemudian akan di bash soal3d.sh
 ```shell
 #proses unzip
 0 18 * * 1-5 cd /home/bagus/Documents/soal-shift-sisop-modul-1-D12-2021/soal3/ && unzip -P $(date +"%m%d%Y") && rm Koleksi.zip
 ```
-Code di atas akan unzip sesuai jadwal yang sudah ditetapkan melalui crontab, setiap hari kecuali sabtu dan minggu, dari jam 7 pagi sampai 6 sore, akan mengakses folder /home/bagus/soal-shift-sisop-modul-1-D12-2021/soal3/ dan kemudian akan unzip Koleksi.zip dengan menggunakan password tanggal hari ini, lalu file zip yang awal akan dihapus. 
+Code di atas akan unzip sesuai jadwal yang sudah ditetapkan melalui crontab, setiap hari kecuali sabtu dan minggu, dari jam 7 pagi sampai 6 sore, akan mengakses folder ```/home/bagus/soal-shift-sisop-modul-1-D12-2021/soal3/``` dan kemudian akan unzip Koleksi.zip dengan menggunakan password tanggal hari ini, lalu file zip yang awal akan dihapus. 
 
 
