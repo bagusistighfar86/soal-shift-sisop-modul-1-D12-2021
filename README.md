@@ -7,7 +7,55 @@
 |Afdhal Ma'ruf Lukman|05111940007001|
 
 ## Soal No 1
-## Soal No 2
+### Sub Soal 1a
+```shell
+#all INFO or ERROR. Ex : INFO Commented on ticket [#2389] (sri)
+regex="(INFO|ERROR)(.*)"
+#log message. Ex : Ticket doesn't exist
+regex1="(?<=ERROR )(.*)(?=\ )"
+#user name. Ex : blossom
+regex2="(?<=[(])(.*)(?=[)])"
+#user with (). Ex : (blossom)
+regex3="(?=[(])(.*)(?<=[)])"
+input="/home/bagus/Downloads/syslog.log";
+grep -oP "$regex" "$input"
+```
+Pada soal ini terdapat inisialisasi beberapa regular expression atau biasa dikenal dengan "regex". Regex digunakan untuk mengelompokkan suatu kesatuan text menjadi beberapa kolom tabel dengan metode pencarian "grep".
+Regex utama digunakan untuk mengelompokkan semua INFO atau ERROR. 
+regex1 digunakan untuk mengelompokkan semua log message ERROR. 
+regex2 digunakan untuk mengelompokkan semua username. 
+regex3 digunakan untuk mengelompokkan semua username dengan (username).
+Semua ini mengacu pada input file yakni "syslog.log".
+Kemudian, hasil pencarian berdasarkan pengelompokan ini ditampilkan di output terminal. 
+
+### Sub Soal 1b
+```shell
+grep -oP "$regex1" "$input"| sort | uniq -c | sort -n
+```
+grep ini untuk menampilkan pengelompokan pada input file berdasarkan regex 1. Hasil pengelompokan ini diurutkan berdasaran waktu log. 
+Setelah itu akan terdapat beberapa message log yang sama sehingga disatukan melalui "uniq -c". Melalui uniq ini akan dihitung jumlah message log yang sama. Lalu, akan di sort kembali dari jumlah message log terbanyak yang sama. 
+
+```shell
+n_error=$(grep -c 'ERROR' $input)
+echo "ERROR_MESSAGE = $n_error"
+```
+n_error untuk mendaptkan jumlah total message log ERROR. 
+
+### Sub Soal 1c
+```shell
+echo ERROR
+grep -oP "$regex2" <<< "$(grep -oP "ERROR.*" "$input")" | sort -n | uniq -c
+echo INFO
+grep -oP "$regex2" <<< "$(grep -oP "INFO.*" "$input")" | sort -n | uniq -c
+```
+Kedua grep ini untuk menampilkan username dan message log berupa ERROR dan INFO. Kemudian ditampilkan jumlah ERROR atau INFO per username dan diurutkan dari alfabet terkecil username. 
+
+### Sub Soal 1d
+```shell
+
+```
+
+# Soal No 2
 Untuk mengerjakan soal nomor 2, dibutuhkan data Toko Shisop berupa laporan dengan nama "Laporan-TokoShiSop.tsv"
 ### Sub Soal 2a
 Pada soal 2a, Steven diminta untuk mencari Row ID dan *profit percentage* **terbesar** dari "Laporan-TokoShisop", dan jika lebih dari satu maka RowID yang diambil adalah RowID terbesar.
