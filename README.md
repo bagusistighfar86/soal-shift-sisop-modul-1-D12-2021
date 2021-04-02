@@ -37,14 +37,14 @@ Souce Code :
 ```shell
 grep -oP "$regex1" "$input"| sort | uniq -c | sort -n
 ```
-grep ini digunakan untuk menampilkan pengelompokan pada input file berdasarkan regex 1. Hasil pengelompokan ini diurutkan berdasarkan waktu log. 
+```grep``` ini digunakan untuk menampilkan pengelompokan pada input file berdasarkan ```regex1```. Hasil pengelompokan ini diurutkan berdasarkan waktu log. 
 Setelah itu akan terdapat beberapa message log yang sama sehingga disatukan melalui ```uniq -c```. Melalui uniq ini akan dihitung jumlah message log yang sama. Lalu, akan di sort kembali dari jumlah message log terbanyak yang sama. 
 
 ```shell
 n_error=$(grep -c 'ERROR' $input)
 echo "ERROR_MESSAGE = $n_error"
 ```
-n_error untuk mendaptkan jumlah total message log ERROR. 
+```n_error``` untuk mendaptkan jumlah total message log ERROR. 
 
 ### Sub Soal 1c
 Ryujin harus menampilkan jumlah kemunculan log ERROR dan INFO untuk setiap user-nya.
@@ -69,8 +69,8 @@ while read -r em; do
     printf "%s,%d\n" "$em" "$count" >> "error_message.csv"
 done 
 ```
-Sub soal ini membuat tabel ke file error_message.csv dengan 2 kolom yaitu ERROR yang merupakan keterangan message log ERROR dan jumlahnya. 
-regex4 ini untuk menghilangkan jumlah per message log yang akan dimasukkan ke kolom ERROR. Selama membaca data, sekaligus menghitung jumlah
+Sub soal ini membuat tabel ke file ```error_message.csv``` dengan 2 kolom yaitu ERROR yang merupakan keterangan message log ERROR dan jumlahnya. 
+```regex4``` ini untuk menghilangkan jumlah per message log yang akan dimasukkan ke kolom ERROR. Selama membaca data, sekaligus menghitung jumlah
 per message log. 
 
 ### Sub Soal 1e
