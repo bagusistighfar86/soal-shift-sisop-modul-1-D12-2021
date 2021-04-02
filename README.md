@@ -52,8 +52,31 @@ Kedua grep ini untuk menampilkan username dan message log berupa ERROR dan INFO.
 
 ### Sub Soal 1d
 ```shell
-
+printf "ERROR,COUNT\n" > "error_message.csv" 
+regex4="^ *[0-9]+ \K.*"
+grep -oP "$regex1" "$input" | sort | uniq -c | sort -nr | grep -oP "$regex4" | 
+while read -r em; do
+    count=$(grep "$em" "$input" | wc -l)
+    printf "%s,%d\n" "$em" "$count" >> "error_message.csv"
+done 
 ```
+Sub soal ini membuat tabel ke file error_message.csv dengan 2 kolom yaitu ERROR yang merupakan keterangan message log ERROR dan jumlahnya. 
+regex4 ini untuk menghilangkan jumlah per message log yang akan dimasukkan ke kolom ERROR. Selama membaca data, sekaligus menghitung jumlah
+per message log. 
+
+### Sub Soal 1e
+```shell
+printf "Username,INFO,ERROR\n" > "user_statistic.csv"
+grep -oP "$regex3" <<< "$(grep -oP "ERROR.*" "$input")" | sort | uniq | 
+while read -r er; do
+    username=$(grep -oP "$regex2" <<< "$er")
+    n_per_info=$(grep "$er" <<< "$(grep -oP "INFO.*" "$input")" | wc -l)
+    n_per_error=$(grep "$er" <<< "$(grep -oP "ERROR.*" "$input")" | wc -l)
+    printf "%s,%d,%d\n" "$username" "$n_per_info" "$n_per_error" >> "user_statistic.csv"
+done
+```
+Sub soal ini membuat file user_statistic.csv dengan isi kolom username, INFO yang merupakan jumlah INFO per username, dan ERROR yang merupakan jumlah
+ERROR per user. 
 
 # Soal No 2
 Untuk mengerjakan soal nomor 2, dibutuhkan data Toko Shisop berupa laporan dengan nama "Laporan-TokoShiSop.tsv"
