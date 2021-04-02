@@ -301,7 +301,7 @@ Output dari script tersebut dari soal 2a sampai 2d ada pada file hasil.txt, yang
 [![1617163189455-2.jpg](https://i.postimg.cc/wTLG0fg4/1617163189455-2.jpg)](https://postimg.cc/svfm2JB5)
 ## No 3
 ### Sub Soal 3a
-Membuat script untuk mengunduh 23 gambar dari ```https://loremflickr.com/320/240/kittenl``` serta menyimpan log-nya ke file ```Foto.log```, kemudian menghapus gambar yang sama dan menyimpan gambar-gambar tersebut dengan nama ```Koleksi_XX``` dengan nomor yang berurutan tanpa ada yang hilang.
+Membuat script untuk mengunduh 23 gambar dari ```https://loremflickr.com/320/240/kitten``` serta menyimpan log-nya ke file ```Foto.log```, kemudian menghapus gambar yang sama dan menyimpan gambar-gambar tersebut dengan nama ```Koleksi_XX``` dengan nomor yang berurutan tanpa ada yang hilang.
 ```shell
 #!/bin/bash
 
