@@ -8,7 +8,7 @@
 
 ## Soal No 1
 ### Sub Soal 1a
-Ryujin diminta untuk mengumpulkan informasi daari log aplikasi pada file syslog.log yang berupa jenis log (INFO atau ERROR), pesan log, dan username pada setiap baris lognya dengan menggunakan regex untuk mempermudah pekerjaannya.
+Ryujin diminta untuk mengumpulkan informasi dari log aplikasi pada file syslog.log yang berupa jenis log (INFO atau ERROR), pesan log, dan username pada setiap baris lognya dengan menggunakan regex untuk mempermudah pekerjaannya.
 Source Code :
 ```shell
 #all INFO or ERROR. Ex : INFO Commented on ticket [#2389] (sri)
@@ -31,6 +31,14 @@ Semua ini mengacu pada input file yakni ```syslog.log```.
 
 Kemudian, hasil pencarian berdasarkan pengelompokan ini ditampilkan di output terminal. 
 
+Output yang dihasilkan pada soal 1a adalah :
+
+[![1a-1.jpg](https://i.postimg.cc/mD3r8VJQ/1a-1.jpg)](https://postimg.cc/dk1v0Rq1)
+
+[![1a-2.jpg](https://i.postimg.cc/wjtTS9nx/1a-2.jpg)](https://postimg.cc/k2mmSPnL)
+
+Dapat dilihat bahwa output yang muncul adalah informasi dari log aplikasi pada file syslog.log yang berupa jenis log (INFO atau ERROR), pesan log, dan username pada setiap baris lognya
+
 ### Sub Soal 1b
 Ryujin harus menampilkan semua pesan error yang muncul beserta jumlah kemunculannya.
 Souce Code :
@@ -44,7 +52,12 @@ Setelah itu akan terdapat beberapa message log yang sama sehingga disatukan mela
 n_error=$(grep -c 'ERROR' $input)
 echo "ERROR_MESSAGE = $n_error"
 ```
-```n_error``` untuk mendaptkan jumlah total message log ERROR. 
+```n_error``` untuk mendapatkan jumlah total message log ERROR.
+Output yang dihasilkan pada soal 1b ini adalah :
+
+[![1b.jpg](https://i.postimg.cc/mrRJ7w3x/1b.jpg)](https://postimg.cc/cv9FSf5T)
+
+Ketika dijalankan, script akan menampilkan semua pesan error yang muncul beserta jumlah kemunculannya.
 
 ### Sub Soal 1c
 Ryujin harus menampilkan jumlah kemunculan log ERROR dan INFO untuk setiap user-nya.
@@ -55,7 +68,12 @@ grep -oP "$regex2" <<< "$(grep -oP "ERROR.*" "$input")" | sort -n | uniq -c
 echo INFO
 grep -oP "$regex2" <<< "$(grep -oP "INFO.*" "$input")" | sort -n | uniq -c
 ```
-Kedua grep ini untuk menampilkan username dan message log berupa ERROR dan INFO. Kemudian ditampilkan jumlah ERROR atau INFO per username dan diurutkan dari alfabet terkecil username. 
+Kedua grep ini untuk menampilkan username dan message log berupa ERROR dan INFO. Kemudian ditampilkan jumlah ERROR atau INFO per username dan diurutkan dari alfabet terkecil username.
+Output yang dihasilkan pada soal 1c adalah :
+
+[![1c.jpg](https://i.postimg.cc/qB3fVzv5/1c.jpg)](https://postimg.cc/jCt3yqNH)
+
+Pada soal 1c, script akan mengelompokkan username berdasarkan jenis log nya, serta jumlah kemunculannya yang diurutkan dari alfabet terkecil dari username.
 
 ### Sub Soal 1d
 Semua informasi yang didapatkan pada sub soal 1b dituliskan ke dalam file ```error_message.csv``` dengan header __Error,Count__ yang diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak.
@@ -69,6 +87,11 @@ while read -r em; do
     printf "%s,%d\n" "$em" "$count" >> "error_message.csv"
 done 
 ```
+
+Output dari script 1d adalah :
+
+[![1d.jpg](https://i.postimg.cc/DZGxD4PQ/1d.jpg)](https://postimg.cc/k6nNR4ZD)
+
 Sub soal ini membuat tabel ke file ```error_message.csv``` dengan 2 kolom yaitu ERROR yang merupakan keterangan message log ERROR dan jumlahnya. 
 ```regex4``` ini untuk menghilangkan jumlah per message log yang akan dimasukkan ke kolom ERROR. Selama membaca data, sekaligus menghitung jumlah
 per message log. 
@@ -86,6 +109,10 @@ while read -r er; do
     printf "%s,%d,%d\n" "$username" "$n_per_info" "$n_per_error" >> "user_statistic.csv"
 done
 ```
+Output yang dihasilkan pada sub soal 1e adalah:
+
+[![1e.jpg](https://i.postimg.cc/RVgLgTz5/1e.jpg)](https://postimg.cc/vc6nBfB3)
+
 Sub soal ini membuat file ```user_statistic.csv``` dengan isi kolom username, INFO yang merupakan jumlah INFO per username, dan ERROR yang merupakan jumlah
 ERROR per user. 
 
@@ -351,8 +378,14 @@ done
 ```
 Nama file akan dirubah sehingga semua file akan menjadi urut. 
 
+Hasil setelah menjalankan script 3a adalah sebagai berikut :
+
+[![3a.jpg](https://i.postimg.cc/Dyp1ryq7/3a.jpg)](https://postimg.cc/mtMcR4Xn)
+
+Pada script ini, akan mendownload 23 foto dari url ```https://loremflickr.com/320/240/kitten``` dan mencatat lognya ke ```Foto.log``` serta menghapus jika ada foto yang sama dan mengganti namanya menjadi ```Koleksi_XX```. ```XX``` merupakan urutan dari file foto yang telah didownload pada url tersebut. 
+
 ### Sub Soal 3b
-Menjalankan script sehari sekali pada jam 8 malam untuk tanggal - tanggal tertentu setiap bulan, yaitu tanggal 1 tujuh hari sekali dan dari tanggal 2 empat hari sekali. Gambar yang diunduh serta log-nya akan dipindahkan ke folder dengan nama tanggall unduhannya dengan format ```DD-MM-YYYY```. Source Code :
+Menjalankan script sehari sekali pada jam 8 malam untuk tanggal - tanggal tertentu setiap bulan, yaitu tanggal 1 tujuh hari sekali dan dari tanggal 2 empat hari sekali. Gambar yang diunduh serta log-nya akan dipindahkan ke folder dengan nama tanggal unduhannya dengan format ```DD-MM-YYYY```. Source Code :
 ```shell
 #!/bin/bash
 
@@ -373,6 +406,16 @@ Untuk kode Crontab :
 0 20 1-31/7,2-31/4 * * cd /home/bagus/Documents/soal-shift-sisop-modul-1-D12-2021/soal3/ && bash "soal3b.sh"
 ```
 Kode soal3b.sh ini akan dijalankan setiap jam 8 malam. Dari tanggal 1-31 setiap 7 hari sekali, dan dari tanggal 2-31 setiap 4 hari sekali. 
+
+Contoh hasil setelah kita menjalankan script tersebut adalah :
+
+[![3b.jpg](https://i.postimg.cc/XYFXrVLH/3b.jpg)](https://postimg.cc/yD175Cwc)
+
+Semua foto koleksi yag telah didownload dan file log foto akan dipindahkan pada folder dengan nama tanggal unduhannya.
+
+Dan jika folder tersebut dibuka, maka hasilnya adalah :
+
+[![3b-1.jpg](https://i.postimg.cc/Gpm2qkrN/3b-1.jpg)](https://postimg.cc/21gr5L1F)
 
 ### Sub Soal 3c
 Mengunduh gambar kelinci dari ```https://loremflickr.com/320/240/kitten``` dan mengunduh gambar kelinci dan kucing secara bergantian dan memindahkan foto dan log-nya ke folder dengan awalan ```Kucing_``` untuk kucing dan ```Kelinci_```untuk kelinci.
@@ -460,7 +503,14 @@ else
 fi
 ```
 Di setiap kondisi akan menuju ke fungsi ```download_func``` dengan mengirimkan url dan "Kelinci/Kucing". Kondisi pertama berjalan apabila jumlah folder ```kucing($n_kucing)``` dan jumlah folder ```kelinci($n_kelinci)``` sama. Dalam artian, yang didownload kembali adalah gambar kucing. Kondisi kedua berjalan apabila jumlah folder ```kucing($n_kucing)``` tidak sama dengan jumlah folder ```kelinci($n_kelinci)```. Dalam artian jumlah folder Kucing lebih banyak daripada jumlah folder Kelinci. Sehingga yang didownload adalah gambar kelinci.
+Output yang dihasilkan setelah menjalankan script 3c adalah:
 
+[![3c-1.jpg](https://i.postimg.cc/Pqy3YvQ2/3c-1.jpg)](https://postimg.cc/Mccm8T4Q)
+
+Karena dimulai dari kucing terlebih dahulu, maka folder yang ada pertama adalah folder kucing yang diikuti tanggal hari ini.
+Dan jika folder tersebut dibuka, isinya adalah sebagai berikut :
+
+[![3c-2.jpg](https://i.postimg.cc/kXWkD4zh/3c-2.jpg)](https://postimg.cc/F7sPB99j)
 
 ### Sub Soal 3d
 Membuat script untuk memindahkan seluruh folder ke zip yang diberi nama ```Koleksi.zip``` dan mengunci zip tersebut dengan password berupa tanggal saat ini dengan format ```MMDDYYYY```. Source Code :
@@ -471,7 +521,17 @@ Password=$(date +"%m%d%Y")
 zip -r -P "$Password" Koleksi.zip ./Kucing_* ./Kelinci_*
 ```
 Code di atas bertujuan untuk membuat zip dengan password tertentu. Password file zip tersebut menggunakan tanggal pada saat pembuatan zip itu juga. Setelah melakukan zip, file dan folder aslinya tidak akan hilang karena tidak menggunakan remove. Output berupa file ```Koleksi.zip``` dengan source seluruh folder Kucing dan Kelinci yang telah terbentuk.
+Jika dijalankan, pada terminal akan menampilkan notifikasi bahwa foto akan dimasukkan pada zip, seperti pada gambar berikut :
 
+[![3d-1.jpg](https://i.postimg.cc/3wNSjJfh/3d-1.jpg)](https://postimg.cc/rd6NMcLZ)
+
+Dan setelah selesai, maka folder koleksi dan isinya akan dimasukkan ke zip dengan nama ```Koleksi.zip```
+
+[![3d-2.jpg](https://i.postimg.cc/FRcxGfjM/3d-2.jpg)](https://postimg.cc/S2S8xx1d)
+
+Jika ingin membuka zip tersebut, maka dibutuhkan password berupa tanggal zip terebut dibuat, dengan format ```MMDDYYYY``` seperti contoh berikut :
+
+[![3d-3.jpg](https://i.postimg.cc/t4ZnFKdf/3d-3.jpg)](https://postimg.cc/VJwN8HVB)
 
 ### Sub Soal 3e
 Membuat koleksinya hanya ter-zip saat waktu kuliah yaitu dari Senin - Jumat pada jam 07.00 - 18.00 dan selain waktu tersebut koleksinya ter-unzip dan file zip akan dihapus (tidak ada sama sekali). Source Code :
