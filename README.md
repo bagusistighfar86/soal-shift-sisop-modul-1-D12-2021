@@ -328,6 +328,12 @@ pada sub soal 2b - 2d, jika sudah ada file "hasil.txt" maka akan tidak akan diti
 
 Output dari script tersebut dari soal 2a sampai 2d ada pada file hasil.txt, yang isinya adalah sebagai berikut :
 [![1617163189455-2.jpg](https://i.postimg.cc/wTLG0fg4/1617163189455-2.jpg)](https://postimg.cc/svfm2JB5)
+
+### Kendala
+Pada saat mengerjakan soal nomor 2, kendala yang saya alami adalah :
+* Pada sub soal 2a, terjadi error ```division by zero```, hal ini ternyata dikarenakan baris pertama yang merupakan judul kolom berupa string masih ikut ke dalam rumus menghitung PP, maka saya menggunakan percabangan ```if(NR!=1)``` agar baris pertama dilewati.
+* Pada sub soal 2b, awalnya saya menggunakan print biasa, ternyata terjadi duplikasi saat data di print, maka solusinya adalah menggunakan array dengan menyatakan nama customer sebagai index sehingga setelah index tersebut di print, tidak terjadi duplikasi.
+
 ## No 3
 ### Sub Soal 3a
 Membuat script untuk mengunduh 23 gambar dari ```https://loremflickr.com/320/240/kitten``` serta menyimpan log-nya ke file ```Foto.log```, kemudian menghapus gambar yang sama dan menyimpan gambar-gambar tersebut dengan nama ```Koleksi_XX``` dengan nomor yang berurutan tanpa ada yang hilang.
@@ -381,9 +387,13 @@ Nama file akan dirubah sehingga semua file akan menjadi urut.
 
 Hasil setelah menjalankan script 3a adalah sebagai berikut :
 
-[![3a.jpg](https://i.postimg.cc/Dyp1ryq7/3a.jpg)](https://postimg.cc/mtMcR4Xn)
+[![3a-1.jpg](https://i.postimg.cc/1zDpJBRS/3a-1.jpg)](https://postimg.cc/sBDQ2pZH)
 
-Pada script ini, akan mendownload 23 foto dari url ```https://loremflickr.com/320/240/kitten``` dan mencatat lognya ke ```Foto.log``` serta menghapus jika ada foto yang sama dan mengganti namanya menjadi ```Koleksi_XX```. ```XX``` merupakan urutan dari file foto yang telah didownload pada url tersebut. 
+Pada script ini, awalnya akan mendownload 23 foto dari url ```https://loremflickr.com/320/240/kitten``` dan mencatat lognya ke ```Foto.log```. Kemudian, script akan menghapus jika ada foto yang sama seperti pada gambar berikut :
+
+[![3a-2.jpg](https://i.postimg.cc/L6qgxDvW/3a-2.jpg)](https://postimg.cc/Tp6Pwrzj)
+
+Karena ada 4 foto yang sama saat didownload, maka 4 foto tersebut akan dihapus sehingga tersisa 19 gambar. Setelah dihapus, kemudian foto yang tersisa akan diganti namanya menjadi ```Koleksi_XX```. ```XX``` merupakan urutan dari file foto yang telah didownload pada url tersebut. 
 
 ### Sub Soal 3b
 Menjalankan script sehari sekali pada jam 8 malam untuk tanggal - tanggal tertentu setiap bulan, yaitu tanggal 1 tujuh hari sekali dan dari tanggal 2 empat hari sekali. Gambar yang diunduh serta log-nya akan dipindahkan ke folder dengan nama tanggal unduhannya dengan format ```DD-MM-YYYY```. Source Code :
@@ -416,7 +426,7 @@ Semua foto koleksi yag telah didownload dan file log foto akan dipindahkan pada 
 
 Dan jika folder tersebut dibuka, maka hasilnya adalah :
 
-[![3b-1.jpg](https://i.postimg.cc/Gpm2qkrN/3b-1.jpg)](https://postimg.cc/21gr5L1F)
+[![3b-2.jpg](https://i.postimg.cc/T36mhmqH/3b-2.jpg)](https://postimg.cc/svT1NMLp)
 
 ### Sub Soal 3c
 Mengunduh gambar kelinci dari ```https://loremflickr.com/320/240/kitten``` dan mengunduh gambar kelinci dan kucing secara bergantian dan memindahkan foto dan log-nya ke folder dengan awalan ```Kucing_``` untuk kucing dan ```Kelinci_```untuk kelinci.
@@ -506,12 +516,22 @@ fi
 Di setiap kondisi akan menuju ke fungsi ```download_func``` dengan mengirimkan url dan "Kelinci/Kucing". Kondisi pertama berjalan apabila jumlah folder ```kucing($n_kucing)``` dan jumlah folder ```kelinci($n_kelinci)``` sama. Dalam artian, yang didownload kembali adalah gambar kucing. Kondisi kedua berjalan apabila jumlah folder ```kucing($n_kucing)``` tidak sama dengan jumlah folder ```kelinci($n_kelinci)```. Dalam artian jumlah folder Kucing lebih banyak daripada jumlah folder Kelinci. Sehingga yang didownload adalah gambar kelinci.
 Output yang dihasilkan setelah menjalankan script 3c adalah:
 
-[![3c-1.jpg](https://i.postimg.cc/Pqy3YvQ2/3c-1.jpg)](https://postimg.cc/Mccm8T4Q)
+[![3c-1.jpg](https://i.postimg.cc/jqnJXvMF/3c-1.jpg)](https://postimg.cc/qg0RBcVs)
 
-Karena dimulai dari kucing terlebih dahulu, maka folder yang ada pertama adalah folder kucing yang diikuti tanggal hari ini.
-Dan jika folder tersebut dibuka, isinya adalah sebagai berikut :
+Karena dimulai dari kucing terlebih dahulu, maka folder yang ada pertama adalah folder kucing yang diikuti tanggal hari ini (Script dijalankan 3 April 2021).
+Jika script dijalankan lagi, maka akan menghasilkan folder Kelinci seperti pada gambar berikut :
 
-[![3c-2.jpg](https://i.postimg.cc/kXWkD4zh/3c-2.jpg)](https://postimg.cc/F7sPB99j)
+[![3c-2.jpg](https://i.postimg.cc/HLfTs0br/3c-2.jpg)](https://postimg.cc/06dTVwWv)
+
+Isi dari masing - masing folder kucing dan kelinci adalah :
+
+Isi folder kucing
+
+[![3c-kucing.jpg](https://i.postimg.cc/rptLbd7M/3c-kucing.jpg)](https://postimg.cc/TyGS5PR4)
+
+Isi folder kelinci
+
+[![3c-kelinci.jpg](https://i.postimg.cc/xTTVQpBs/3c-kelinci.jpg)](https://postimg.cc/nM5PY2F7)
 
 ### Sub Soal 3d
 Membuat script untuk memindahkan seluruh folder ke zip yang diberi nama ```Koleksi.zip``` dan mengunci zip tersebut dengan password berupa tanggal saat ini dengan format ```MMDDYYYY```. Source Code :
@@ -530,9 +550,13 @@ Dan setelah selesai, maka folder koleksi dan isinya akan dimasukkan ke zip denga
 
 [![3d-2.jpg](https://i.postimg.cc/FRcxGfjM/3d-2.jpg)](https://postimg.cc/S2S8xx1d)
 
+Isi dari zip ```Koleksi.zip``` adalah sebagai berikut :
+
+[![3d-1.jpg](https://i.postimg.cc/Gm8N3WKj/3d-1.jpg)](https://postimg.cc/TKxQCHZy)
+
 Jika ingin membuka zip tersebut, maka dibutuhkan password berupa tanggal zip terebut dibuat, dengan format ```MMDDYYYY``` seperti contoh berikut :
 
-[![3d-3.jpg](https://i.postimg.cc/t4ZnFKdf/3d-3.jpg)](https://postimg.cc/VJwN8HVB)
+[![3d-2.jpg](https://i.postimg.cc/4Nn2wDDT/3d-2.jpg)](https://postimg.cc/CzT4xQMv)
 
 ### Sub Soal 3e
 Membuat koleksinya hanya ter-zip saat waktu kuliah yaitu dari Senin - Jumat pada jam 07.00 - 18.00 dan selain waktu tersebut koleksinya ter-unzip dan file zip akan dihapus (tidak ada sama sekali). Source Code :
@@ -549,4 +573,23 @@ Code di atas akan membuat zip sesuai jadwal yang sudah ditetapkan melalui cronta
 ```
 Code di atas akan unzip sesuai jadwal yang sudah ditetapkan melalui crontab, setiap hari kecuali sabtu dan minggu, dari jam 7 pagi sampai 6 sore, akan mengakses folder ```/home/bagus/soal-shift-sisop-modul-1-D12-2021/soal3/``` dan kemudian akan unzip Koleksi.zip dengan menggunakan password tanggal hari ini, lalu file zip yang awal akan dihapus. 
 
+### Kendala
+Saat code masih seperti :
+https://github.com/bagusistighfar86/cobarepo/blob/main/3aerror.sh :
 
+* Terkadang output benar yakni yang dihapus setelah pengecekan gambar sama adalah gambar yang baru di download bukan gambar yang sudah ada. Namun, jika berulang kali dicoba ada beberapa kasus gambar yang sama namun yang dihapus adalah gambar yang sudah ada sebelumnya bukan yang baru didownload, sehingga nama file ada yang terlewati dan tidak urut.
+Contoh Saat iterasi ke 7 karena gambar ke 7 ini sama dengan gambar "Koleksi_05" harusnya yang dihapus adalah gambar ke 7 yang baru di download ini. Bukan "Koleksi_05.jpg" seperti pada gambar berikut :
+
+[![Kendala-1.jpg](https://i.postimg.cc/769D1Fp2/Kendala-1.jpg)](https://postimg.cc/0MzLPB5k)
+
+Koleksi_05, Koleksi_10 tidak ada dan terlewati. Sebenarnya gambar yang terdeteksi sama ada 3 harusnya isi file ada 20 gambar. Namun, hasilnya hanya ada 19 file gambar. Hasilnya adalah seperti gambar berikut :
+
+[![Kendala-2.jpg](https://i.postimg.cc/w3KW1v0c/Kendala-2.jpg)](https://postimg.cc/D4gQD2V8)
+
+* Error soal 3d.
+pada kode berikut :
+```shell
+Password=$(date +"%m%d%Y")
+zip -r -P "$Password" Koleksi.zip ./Kucing_* ./Kelinci_*
+```
+Ternyata menghasilkan 1 folder zip dan tidak menghapus folder aslinya. Hal ini dikarenakan command yang digunakan zip -r. Harusnya menggunakan zip -rm. Karena zip -r berarti membuat file zip tanpa menghapus folder atau file aslinya di luar zip. Sedangkan zip -rm berarti membuat file zip dengan menghapus folder atau file aslinya di luar zip.
