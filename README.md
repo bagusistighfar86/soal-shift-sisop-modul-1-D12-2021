@@ -420,7 +420,7 @@ Kode soal3b.sh ini akan dijalankan setiap jam 8 malam. Dari tanggal 1-31 setiap 
 
 Contoh hasil setelah kita menjalankan script tersebut adalah :
 
-[![3b.jpg](https://i.postimg.cc/XYFXrVLH/3b.jpg)](https://postimg.cc/yD175Cwc)
+[![3b-1.jpg](https://i.postimg.cc/6Qm6DJHx/3b-1.jpg)](https://postimg.cc/v15dVjF0)
 
 Semua foto koleksi yag telah didownload dan file log foto akan dipindahkan pada folder dengan nama tanggal unduhannya.
 
