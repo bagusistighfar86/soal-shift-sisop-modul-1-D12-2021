@@ -518,9 +518,9 @@ Membuat script untuk memindahkan seluruh folder ke zip yang diberi nama ```Kolek
 #!/bin/bash
 
 Password=$(date +"%m%d%Y")
-zip -r -P "$Password" Koleksi.zip ./Kucing_* ./Kelinci_*
+zip -rm -P "$Password" Koleksi.zip ./Kucing_* ./Kelinci_*
 ```
-Code di atas bertujuan untuk membuat zip dengan password tertentu. Password file zip tersebut menggunakan tanggal pada saat pembuatan zip itu juga. Setelah melakukan zip, file dan folder aslinya tidak akan hilang karena tidak menggunakan remove. Output berupa file ```Koleksi.zip``` dengan source seluruh folder Kucing dan Kelinci yang telah terbentuk.
+Code di atas bertujuan untuk membuat zip dengan password tertentu. Password file zip tersebut menggunakan tanggal pada saat pembuatan zip itu juga. Setelah melakukan zip, file dan folder aslinya akan hilang. Output berupa file ```Koleksi.zip``` dengan source seluruh folder Kucing dan Kelinci yang telah terbentuk.
 Jika dijalankan, pada terminal akan menampilkan notifikasi bahwa foto akan dimasukkan pada zip, seperti pada gambar berikut :
 
 [![3d-1.jpg](https://i.postimg.cc/3wNSjJfh/3d-1.jpg)](https://postimg.cc/rd6NMcLZ)
