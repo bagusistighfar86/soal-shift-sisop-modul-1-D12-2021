@@ -348,7 +348,6 @@ files="$( find -type f )"
                 if diff "$file1" "$file2" > /dev/null; then
                     #echo "$file1 dan $file2 duplikat"
                     rm -v "$file2"
-                    k=$[$k-1]
                 fi
             fi
         done
