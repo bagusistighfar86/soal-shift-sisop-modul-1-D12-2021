@@ -34,7 +34,7 @@ done
 
 #-------soal1e-------
 printf "Username,INFO,ERROR\n" > "user_statistic.csv"
-grep -oP "$regex3" <<< "$(grep -oP "ERROR.*" "$input")" | sort | uniq | 
+grep -oP "$regex3" <<< "$(grep -oP "$regex" "$input")" | sort | uniq | 
 while read -r er; do
     username=$(grep -oP "$regex2" <<< "$er")
     n_per_info=$(grep "$er" <<< "$(grep -oP "INFO.*" "$input")" | wc -l)
