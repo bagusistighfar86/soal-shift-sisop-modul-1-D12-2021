@@ -101,7 +101,7 @@ Semua informasi yang didapatkan pada poin c ditulis ke dalam file ```user_statis
 Source Code :
 ```shell
 printf "Username,INFO,ERROR\n" > "user_statistic.csv"
-grep -oP "$regex3" <<< "$(grep -oP "ERROR.*" "$input")" | sort | uniq | 
+grep -oP "$regex3" <<< "$(grep -oP "$regex" "$input")" | sort | uniq | 
 while read -r er; do
     username=$(grep -oP "$regex2" <<< "$er")
     n_per_info=$(grep "$er" <<< "$(grep -oP "INFO.*" "$input")" | wc -l)
@@ -114,7 +114,7 @@ Output yang dihasilkan pada sub soal 1e adalah:
 [![1e.jpg](https://i.postimg.cc/RVgLgTz5/1e.jpg)](https://postimg.cc/vc6nBfB3)
 
 Sub soal ini membuat file ```user_statistic.csv``` dengan isi kolom username, INFO yang merupakan jumlah INFO per username, dan ERROR yang merupakan jumlah
-ERROR per user. 
+ERROR per user. Data yang dibaca saat while apa yang didapatkan dari hasil grep di atasnya yang mengumpulkan seluruh username yang memiliki INFO atau ERROR. Kemudian di pilah kembali dalam while mana yang ERROR dan mana yang INFO. Lalu jumlah ERROR atau INFO per user dihitung total per usernya.
 
 # Soal No 2
 Untuk mengerjakan soal nomor 2, dibutuhkan data Toko Shisop berupa laporan dengan nama ```Laporan-TokoShiSop.tsv```
