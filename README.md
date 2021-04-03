@@ -4,7 +4,7 @@
 |------|-----|
 |Muhammad Bagus Istighfar|05111940000049|
 |Rizqi Rifaldi|05111940000068|
-|Afdhal Ma'ruf Lukman|05111940007001|
+|Afdhal Ma'ruf Lukman|05111940007001| ==> tidak ada kontribusi dan komunikasi sama sekali
 
 ## Soal No 1
 ### Sub Soal 1a
