@@ -118,6 +118,9 @@ Output yang dihasilkan pada sub soal 1e adalah:
 Sub soal ini membuat file ```user_statistic.csv``` dengan isi kolom username, INFO yang merupakan jumlah INFO per username, dan ERROR yang merupakan jumlah
 ERROR per user. Data yang dibaca saat while apa yang didapatkan dari hasil grep di atasnya yang mengumpulkan seluruh username yang memiliki INFO atau ERROR. Kemudian di pilah kembali dalam while mana yang ERROR dan mana yang INFO. Lalu jumlah ERROR atau INFO per user dihitung total per usernya.
 
+### Kendala
+* Belum terlalu oaham mengenai regex
+
 # Soal No 2
 Untuk mengerjakan soal nomor 2, dibutuhkan data Toko Shisop berupa laporan dengan nama ```Laporan-TokoShiSop.tsv```
 ### Sub Soal 2a
